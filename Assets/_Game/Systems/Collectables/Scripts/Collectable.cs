@@ -5,11 +5,28 @@ using UnityEngine;
 
 public class Collectable : MonoBehaviour
 {
-    public ItemData itemData;
+    [SerializeField] private ItemData referenceItemData;
+    
+    private ItemData _itemData;
+
+    private void Awake()
+    {
+        if (_itemData == null)
+        {
+            Initialize(Instantiate(referenceItemData));
+        }
+    }
+    //TODO we have to make this Droppable
+
+    public void Initialize(ItemData itemData)
+    {
+        _itemData = itemData;
+    }
+
     public void PickUp()
     {
-        Debug.Log($"Picking Up Item {itemData.Id}");
-        Inventory.Instance.AddItem(itemData);
+        Debug.Log($"Picking Up Item {_itemData.Id}");
+        Inventory.Instance.AddItem(_itemData);
         Destroy(gameObject);
     }
 }
