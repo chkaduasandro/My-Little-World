@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,6 +13,10 @@ public class CharacterController : MonoBehaviour
     private bool _isShifted;
     private bool _isFacingRight;
 
+    private bool IsMoving => _movementInput.magnitude > 0;
+    private bool IsRunning => IsMoving && _isShifted;
+
+
     // Update is called once per frame
     void Update()
     {
@@ -25,7 +30,7 @@ public class CharacterController : MonoBehaviour
     {
         _movementInput.x = Input.GetAxisRaw("Horizontal");
         _movementInput.y = Input.GetAxisRaw("Vertical");
-        
+
         _isShifted = Input.GetKey(KeyCode.LeftShift);
     }
 
@@ -36,8 +41,8 @@ public class CharacterController : MonoBehaviour
 
     private void UpdateAnimation()
     {
-        var speed = IsRunning() ? 1.8f : 1;
-        characterAnimation.MoveAnimation(IsMoving(),speed);
+        var speed = IsRunning ? 1.8f : 1;
+        characterAnimation.MoveAnimation(IsMoving, speed);
     }
 
     private void UpdateOrientation()
@@ -50,13 +55,16 @@ public class CharacterController : MonoBehaviour
         }
     }
 
-    private bool IsMoving()
-    {
-        return _movementInput.magnitude > 0;
-    }
 
-    private bool IsRunning()
+    private void OnTriggerStay2D(Collider2D other)
     {
-        return IsMoving() && _isShifted;
+        if (other.gameObject.CompareTag(Constants.Tags.Collectable))
+        {
+            if (Input.GetKeyDown(KeyCode.F))
+            {
+                var collectable = other.GetComponent<Collectable>();
+                collectable.PickUp();
+            }
+        }
     }
 }

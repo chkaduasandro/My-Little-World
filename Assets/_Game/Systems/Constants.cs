@@ -4,6 +4,12 @@ using UnityEngine;
 
 public static class Constants 
 {
+
+    public static class Tags
+    {
+        public const string Collectable = "Collectable";
+    }
+    
     public static class Animation
     {
         public static class Booleans
