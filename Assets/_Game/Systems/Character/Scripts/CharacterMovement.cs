@@ -15,16 +15,15 @@ public class CharacterMovement : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
     }
 
-    public void Move(float horizontalInput, float verticalInput, bool running = false)
+    public void Move(Vector2 movementInput, bool running = false)
     {
         // Movement
-        Vector2 moveDirection = new Vector2(horizontalInput, verticalInput).normalized;
-        
+        movementInput.Normalize();
         
         var targetSpeed = running ? moveSpeed * runMultiplier : moveSpeed;
         var speed = Mathf.Lerp(rb.velocity.magnitude, targetSpeed, speedLerp * Time.deltaTime);
         
-        var velocity = moveDirection * speed;
+        var velocity = movementInput * speed;
         rb.velocity = velocity;
     }
     
