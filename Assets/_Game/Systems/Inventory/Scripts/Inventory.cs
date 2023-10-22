@@ -5,13 +5,15 @@ using UnityEngine;
 
 public class Inventory : Singleton<Inventory>
 {
+    [SerializeField] private Collectable collectablePrefab;
+
     public int slotAmount = 16;
     public List<ItemData> itemsStored = new ();
     public Dictionary<SkinType, ClothingData> clothingEquipped = new ();
     public event Action onItemsUpdate;
     public event Action onClothesUpdate;
 
-
+        
     public void AddItem(ItemData data)
     {
         if (itemsStored.Count >= slotAmount)
@@ -23,6 +25,13 @@ public class Inventory : Singleton<Inventory>
         itemsStored.Add(data);
 
         onItemsUpdate?.Invoke();
+    }
+
+    public void DropItem(ItemData data)
+    {
+        RemoveItem(data);
+        var collectable = Instantiate(collectablePrefab, GameManager.Instance.characterController.transform.position, Quaternion.identity);
+        collectable.Initialize(data);
     }
     public void RemoveItem(ItemData data)
     {

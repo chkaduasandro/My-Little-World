@@ -39,11 +39,11 @@ public class InventorySlot : MonoBehaviour, IPointerDownHandler
                     Debug.Log("Equip");
                     MouseInputController.Instance.InitializeMenu(
                         new KeyValuePair<string, Action>("Equip",() => Inventory.Instance.PutOnClothing(equipment)),
-                        new KeyValuePair<string, Action>("Drop",() => Inventory.Instance.RemoveItem(itemData))
+                        new KeyValuePair<string, Action>("Drop",() => Inventory.Instance.DropItem(itemData))
                         );
                     break;
                 default:
-                    MouseInputController.Instance.InitializeMenu(new KeyValuePair<string, Action>("Drop",() => Inventory.Instance.RemoveItem(itemData)));
+                    MouseInputController.Instance.InitializeMenu(new KeyValuePair<string, Action>("Drop",() => Inventory.Instance.DropItem(itemData)));
                     break;
             }
             

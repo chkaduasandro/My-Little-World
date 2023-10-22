@@ -11,7 +11,7 @@ public class Collectable : MonoBehaviour
 
     private void Awake()
     {
-        if (_itemData == null)
+        if (referenceItemData != null)
         {
             Initialize(Instantiate(referenceItemData));
         }
