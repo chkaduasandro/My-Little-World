@@ -6,7 +6,7 @@ I began doing research on clothing and skinning variations, as the game is suppo
 The best approach I found was to use a sprite library with sprite skins. However, more research is needed to determine if 
 sprite skins only work on rigged sprites.
 
-I also learned about sprite animations. If we want to have four directions with skeletal animations, we would need
+If we want to have four directions with skeletal animations, we would need
 four different objects and animations. Another option, which seems a bit outdated, is sprite sheet swapping. 
 I'll continue looking into this.
 
