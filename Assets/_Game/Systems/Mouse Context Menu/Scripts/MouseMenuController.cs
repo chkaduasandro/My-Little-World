@@ -4,12 +4,13 @@ using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
 
-public class MouseInputController : Singleton<MouseInputController>
+
+public class MouseMenuController : Singleton<MouseMenuController>
 {
     [SerializeField] private Transform menuHolder;
-    [SerializeField] private MouseContextAction mouseContextActionPrefab;
+    [SerializeField] private MenuItemUI m_MenuItemUIPrefab;
 
-    private List<MouseContextAction> generatedActionObjs = new();
+    private List<MenuItemUI> generatedActionObjs = new();
 
     private ItemData selectedSlot;
 
@@ -17,12 +18,11 @@ public class MouseInputController : Singleton<MouseInputController>
     {
         ClearMenu();
 
-        for (int i = 0; i < actionKeyValues.Length; i++)
+        foreach (var pair in actionKeyValues)
         {
-            var contextAction = Instantiate(mouseContextActionPrefab, menuHolder);
+            var contextAction = Instantiate(m_MenuItemUIPrefab, menuHolder);
             generatedActionObjs.Add(contextAction);
 
-            var pair = actionKeyValues[i];
             var action = pair.Value;
             var actionName = pair.Key;
 

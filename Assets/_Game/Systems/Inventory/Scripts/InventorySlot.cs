@@ -29,6 +29,8 @@ public class InventorySlot : MonoBehaviour, IPointerDownHandler
     {
         if (eventData.button == PointerEventData.InputButton.Right)
         {
+            if (itemData == null) return;
+            
             switch (itemData)
             {
                 case ConsumableData consumable:
@@ -37,13 +39,13 @@ public class InventorySlot : MonoBehaviour, IPointerDownHandler
                     break;
                 case ClothingData equipment:
                     Debug.Log("Equip");
-                    MouseInputController.Instance.InitializeMenu(
+                    MouseMenuController.Instance.InitializeMenu(
                         new KeyValuePair<string, Action>("Equip",() => Inventory.Instance.PutOnClothing(equipment)),
                         new KeyValuePair<string, Action>("Drop",() => Inventory.Instance.DropItem(itemData))
                         );
                     break;
                 default:
-                    MouseInputController.Instance.InitializeMenu(new KeyValuePair<string, Action>("Drop",() => Inventory.Instance.DropItem(itemData)));
+                    MouseMenuController.Instance.InitializeMenu(new KeyValuePair<string, Action>("Drop",() => Inventory.Instance.DropItem(itemData)));
                     break;
             }
             
