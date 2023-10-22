@@ -21,11 +21,8 @@ public class ShopMenuUI : MonoBehaviour
     [SerializeField] private List<ShopSlot> inventorySideSlots;
     private List<ShopSlot> shopSideSlots = new List<ShopSlot>();
 
-
-    private List<ShopSlot> selectedBuySlot = new ();
-    private List<ShopSlot> selectedSellSlot = new ();
-
     private bool _isOpened;
+    private Shop _accessedShop;
     
 
     private void Start()
@@ -51,16 +48,66 @@ public class ShopMenuUI : MonoBehaviour
             inventorySideSlots[i].Populate(Inventory.Instance.itemsStored[i], Recalculate);
         }
         
+        tradeButton.onClick.RemoveAllListeners();
+        tradeButton.onClick.AddListener(() =>
+        {
+            if (TryExchange(out var bought, out var sold))
+            {
+                bought.ForEach(data => Inventory.Instance.AddItem(data));
+                sold.ForEach(data => Inventory.Instance.RemoveItem(data));
+                
+                sold.ForEach(data => _accessedShop.AddItem(data));
+                bought.ForEach(data => _accessedShop.RemoveItem(data));
+            }
+        });
+    }
+    
+    
+    // This should not be in UI but no time to write another system.
+    public bool TryExchange(out List<ItemData> bought, out List<ItemData> sold)
+    {
+        bought = new List<ItemData>();
+        sold = new List<ItemData>();
+
+        if (Inventory.Instance.coinAount < -CalculateExchange())
+        {
+            Debug.Log("Not Enough Money");
+            return false;
+        }
+
+        if (Inventory.Instance.FreeSpaceCount < bought.Count)
+        {
+            Debug.Log("Not Enough Space");
+            return false;
+        }
+        
+        Inventory.Instance.coinAount += CalculateExchange();
+
+        bought = GetSelectedShopSide();
+        sold = GetSelectedInventorySide();
+        return true;
     }
 
 
     private void Recalculate()
     {
-        var inventorySideSum = inventorySideSlots.Select(slot => slot).Where(slot => slot.GetItemData != null && slot.isSelected).Sum(slot => slot.GetItemData.Price);
-        var shopSideSum = shopSideSlots.Select(slot => slot).Where(slot => slot.GetItemData != null && slot.isSelected).Sum(slot => slot.GetItemData.Price);
-
-        exchangeAmount.text = (inventorySideSum - shopSideSum).ToString("F2");
+        exchangeAmount.text = CalculateExchange().ToString("F2");
         balanceAmount.text = Inventory.Instance.coinAount.ToString();
+    }
+
+    private double CalculateExchange()
+    {
+        return GetSelectedInventorySide().Sum(data => data.Price) - GetSelectedShopSide().Sum(data => data.Price);
+    }
+
+    private List<ItemData> GetSelectedInventorySide()
+    {
+        return inventorySideSlots.Where(slot => slot.GetItemData != null && slot.isSelected).Select(slot => slot.GetItemData).ToList();
+    }
+
+    private List<ItemData> GetSelectedShopSide()
+    {
+        return shopSideSlots.Where(slot => slot.GetItemData != null && slot.isSelected).Select(slot => slot.GetItemData).ToList();
     }
 
     private void ClearSlots()
@@ -75,10 +122,11 @@ public class ShopMenuUI : MonoBehaviour
     }
 
 
-    public void OpenMenu(List<ItemData> itemDatas)
+    public void OpenMenu(Shop shop,List<ItemData> itemDatas)
     {
         if (_isOpened) return;
         _isOpened = true;
+        _accessedShop = shop;
         
         Initialize(itemDatas);
         Recalculate();
@@ -93,6 +141,7 @@ public class ShopMenuUI : MonoBehaviour
     {
         if (!_isOpened) return;
         _isOpened = false;
+        _accessedShop = null;
 
         transform.DOScale(Vector3.zero, 0.3f).SetEase(Ease.InBack).OnComplete(() =>
         {

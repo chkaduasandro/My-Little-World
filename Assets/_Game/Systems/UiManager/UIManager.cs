@@ -11,12 +11,12 @@ public class UIManager : Singleton<UIManager>
 
     
 
-    public void OpenShopMenu(List<ItemData> itemDatas)
+    public void OpenShopMenu(Shop shop,List<ItemData> itemDatas)
     {
         GameManager.Instance.SwitchControlState(ControlState.Interface);
 
         //Close Both Inventory and Equipment UI
-        shopMenuUI.OpenMenu(itemDatas);
+        shopMenuUI.OpenMenu(shop,itemDatas);
         
         equipmentUI.CloseUI();
         inventoryUI.CloseUI();

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
@@ -9,16 +10,30 @@ public class Shop : MonoBehaviour
 {
     [SerializeField] private InteractionButton interactionButton;
     [SerializeField] private Transform interactionMenuHolder;
-    
+
     // Hardcoded shop items, Remake to scriptable object may be?;
-    [SerializeField] private List<ItemData> itemDatas;
+    [SerializeField] public List<ItemData> itemDatas;
 
     private void Start()
     {
-        interactionButton.OnClick += () => {UIManager.Instance.OpenShopMenu(itemDatas);};
+        interactionButton.OnClick += () => { UIManager.Instance.OpenShopMenu(this, itemDatas); };
     }
 
+    public void AddItem(ItemData itemData)
+    {
+        itemDatas.Add(itemData);
+    }
 
+    public void RemoveItem(ItemData itemData)
+    {
+        if (!itemDatas.Contains(itemData))
+        {
+            Debug.Log($"Shop does not contain item {itemData}");
+            return;
+        }
+        itemDatas.Remove(itemData);
+    }
+    
     
     private void OpenInteraction()
     {
@@ -34,7 +49,6 @@ public class Shop : MonoBehaviour
             interactionMenuHolder.gameObject.SetActive(false);
         });
     }
-    
 
 
     private void OnTriggerEnter(Collider other)

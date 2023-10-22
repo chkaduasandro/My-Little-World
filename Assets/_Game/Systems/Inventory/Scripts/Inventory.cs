@@ -1,11 +1,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class Inventory : Singleton<Inventory>
 {
-    public int coinAount = 5000; // Creating basic int for coins... This usually is done in other managers, but for simplicity sake and for testing.
+    public double coinAount = 5000; // Creating basic int for coins... This usually is done in other managers, but for simplicity sake and for testing.
+    public int FreeSpaceCount => _slotAmount - itemsStored.Count;
 
     public List<ItemData> itemsStored = new ();
     public Dictionary<SkinType, ClothingData> clothingEquipped = new ();
@@ -15,7 +17,7 @@ public class Inventory : Singleton<Inventory>
 
     [SerializeField] private Collectable collectablePrefab;
 
-    private int _slotAmount = 16;
+    public int _slotAmount = 16;
 
         
     public void AddItem(ItemData data)
@@ -30,7 +32,7 @@ public class Inventory : Singleton<Inventory>
 
         onItemsUpdate?.Invoke();
     }
-
+    
     public void DropItem(ItemData data)
     {
         RemoveItem(data);
@@ -48,7 +50,7 @@ public class Inventory : Singleton<Inventory>
         itemsStored.Remove(data);
         onItemsUpdate?.Invoke();
     }
-
+    
     public void PutOnClothing(ClothingData clothingData)
     {
         if (clothingEquipped.TryGetValue(clothingData.Type, out var woreData))
