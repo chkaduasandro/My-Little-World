@@ -14,9 +14,14 @@ public class Shop : MonoBehaviour
     // Hardcoded shop items, Remake to scriptable object may be?;
     [SerializeField] public List<ItemData> itemDatas;
 
+    private bool _isInteractable;
+
     private void Start()
     {
+        _isInteractable = false;
         interactionButton.OnClick += () => { UIManager.Instance.OpenShopMenu(this, itemDatas); };
+        
+        interactionMenuHolder.gameObject.SetActive(false);
     }
 
     public void AddItem(ItemData itemData)
@@ -37,6 +42,9 @@ public class Shop : MonoBehaviour
     
     private void OpenInteraction()
     {
+        if(_isInteractable) return;
+        _isInteractable = true;
+        
         interactionMenuHolder.localScale = Vector3.zero;
         interactionMenuHolder.gameObject.SetActive(true);
         interactionMenuHolder.DOScale(Vector3.one, 0.4f).SetEase(Ease.OutBack);
@@ -44,22 +52,25 @@ public class Shop : MonoBehaviour
 
     private void CloseInteraction()
     {
+        if(!_isInteractable) return;
         interactionMenuHolder.DOScale(Vector3.zero, 0.4f).SetEase(Ease.InBack).OnComplete(() =>
         {
+            _isInteractable = false;
             interactionMenuHolder.gameObject.SetActive(false);
         });
     }
 
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter2D(Collider2D other)
     {
+        Debug.Log("entered");
         if (other.CompareTag(Constants.Tags.Player))
         {
             OpenInteraction();
         }
     }
 
-    private void OnTriggerExit(Collider other)
+    private void OnTriggerExit2D(Collider2D other)
     {
         if (other.CompareTag(Constants.Tags.Player))
         {

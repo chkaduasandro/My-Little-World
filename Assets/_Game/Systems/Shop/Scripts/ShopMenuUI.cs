@@ -134,6 +134,7 @@ public class ShopMenuUI : MonoBehaviour
         transform.localScale = Vector3.zero;
         gameObject.SetActive(true);
 
+        transform.DOKill();
         transform.DOScale(Vector3.one, 0.3f).SetEase(Ease.OutBack);
     }
 
@@ -143,6 +144,7 @@ public class ShopMenuUI : MonoBehaviour
         _isOpened = false;
         _accessedShop = null;
 
+        transform.DOKill();
         transform.DOScale(Vector3.zero, 0.3f).SetEase(Ease.InBack).OnComplete(() =>
         {
             gameObject.SetActive(false);

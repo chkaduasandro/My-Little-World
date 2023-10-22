@@ -1870,6 +1870,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6299631467046844160}
+  - component: {fileID: 4960428722396850680}
   - component: {fileID: 6299631467046844163}
   m_Layer: 0
   m_Name: Shop
@@ -1895,6 +1896,22 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!58 &4960428722396850680
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6299631467046844161}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 1.84
 --- !u!114 &6299631467046844163
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1909,7 +1926,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactionButton: {fileID: 6299631467119969299}
   interactionMenuHolder: {fileID: 6299631468027363372}
-  itemDatas: []
+  itemDatas:
+  - {fileID: 11400000, guid: 1ab09fb6b72d30846b4dcb7df24dcbfc, type: 2}
+  - {fileID: 11400000, guid: 1ab09fb6b72d30846b4dcb7df24dcbfc, type: 2}
+  - {fileID: 11400000, guid: 1ab09fb6b72d30846b4dcb7df24dcbfc, type: 2}
 --- !u!1 &6299631467119969294
 GameObject:
   m_ObjectHideFlags: 0
