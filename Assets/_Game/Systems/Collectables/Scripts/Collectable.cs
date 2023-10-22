@@ -3,9 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Collectable : MonoBehaviour
+public class Collectable : Interaction
 {
-    [SerializeField] private SpriteRenderer spriteRenderer;
+    [SerializeField] private SpriteRenderer objectSprite;
     
     [Header("Reference Testing")]
     [SerializeField] private ItemData referenceItemData;
@@ -19,10 +19,16 @@ public class Collectable : MonoBehaviour
         // Ill rework this after im done with other stuff!
         if (referenceItemData != null) Initialize(Instantiate(referenceItemData));
     }
+    
+    public override void OnInteracted()
+    {
+        PickUp();
+    }
+
     public void Initialize(ItemData itemData)
     {
         _itemData = itemData;
-        spriteRenderer.sprite = itemData.IconUi;
+        objectSprite.sprite = itemData.IconUi;
     }
 
     public void PickUp()

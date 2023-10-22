@@ -58,6 +58,8 @@ public class ShopMenuUI : MonoBehaviour
                 
                 sold.ForEach(data => _accessedShop.AddItem(data));
                 bought.ForEach(data => _accessedShop.RemoveItem(data));
+                
+                UIManager.Instance.CloseShopMenu();
             }
         });
     }
@@ -71,20 +73,23 @@ public class ShopMenuUI : MonoBehaviour
 
         if (Inventory.Instance.coinAount < -CalculateExchange())
         {
+            UIManager.Instance.HeaderScream("Not Enough Money");
             Debug.Log("Not Enough Money");
             return false;
         }
 
         if (Inventory.Instance.FreeSpaceCount < bought.Count)
         {
+            UIManager.Instance.HeaderScream("Not Enough Space");
             Debug.Log("Not Enough Space");
             return false;
         }
         
-        Inventory.Instance.coinAount += CalculateExchange();
+        Inventory.Instance.UpdateCoins(CalculateExchange());
 
         bought = GetSelectedShopSide();
         sold = GetSelectedInventorySide();
+
         return true;
     }
 

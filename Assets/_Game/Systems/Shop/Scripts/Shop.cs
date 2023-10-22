@@ -6,22 +6,15 @@ using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Shop : MonoBehaviour
+public class Shop : Interaction
 {
-    [SerializeField] private InteractionButton interactionButton;
-    [SerializeField] private Transform interactionMenuHolder;
-
+    // Bad Choice of parent but no time, too tired;
     // Hardcoded shop items, Remake to scriptable object may be?;
     [SerializeField] public List<ItemData> itemDatas;
 
-    private bool _isInteractable;
-
-    private void Start()
+    public override void OnInteracted()
     {
-        _isInteractable = false;
-        interactionButton.OnClick += () => { UIManager.Instance.OpenShopMenu(this, itemDatas); };
-        
-        interactionMenuHolder.gameObject.SetActive(false);
+        UIManager.Instance.OpenShopMenu(this, itemDatas);
     }
 
     public void AddItem(ItemData itemData)
@@ -39,42 +32,4 @@ public class Shop : MonoBehaviour
         itemDatas.Remove(itemData);
     }
     
-    
-    private void OpenInteraction()
-    {
-        if(_isInteractable) return;
-        _isInteractable = true;
-        
-        interactionMenuHolder.localScale = Vector3.zero;
-        interactionMenuHolder.gameObject.SetActive(true);
-        interactionMenuHolder.DOScale(Vector3.one, 0.4f).SetEase(Ease.OutBack);
-    }
-
-    private void CloseInteraction()
-    {
-        if(!_isInteractable) return;
-        interactionMenuHolder.DOScale(Vector3.zero, 0.4f).SetEase(Ease.InBack).OnComplete(() =>
-        {
-            _isInteractable = false;
-            interactionMenuHolder.gameObject.SetActive(false);
-        });
-    }
-
-
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        Debug.Log("entered");
-        if (other.CompareTag(Constants.Tags.Player))
-        {
-            OpenInteraction();
-        }
-    }
-
-    private void OnTriggerExit2D(Collider2D other)
-    {
-        if (other.CompareTag(Constants.Tags.Player))
-        {
-            CloseInteraction();
-        }
-    }
 }

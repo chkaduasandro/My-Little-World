@@ -84,7 +84,7 @@ public class Inventory : Singleton<Inventory>
         onClothesUpdate?.Invoke();
     }
 
-    public void UpdateCoins(int amount)
+    public void UpdateCoins(double amount)
     {
         coinAount += amount;
         onCoinsUpdate?.Invoke();

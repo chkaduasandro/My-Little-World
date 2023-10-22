@@ -27,7 +27,7 @@ public class CharacterController : MonoBehaviour
         UpdateOrientation();
         UpdateAnimation();
 
-        CheckForCollectable();
+        // CheckForCollectable();
     }
 
     private void UpdateInput()
@@ -63,21 +63,21 @@ public class CharacterController : MonoBehaviour
         }
     }
 
-    private void CheckForCollectable()
-    {
-        if (Input.GetKeyDown(KeyCode.F))
-        {
-            Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, pickUpRange);
-            foreach (Collider2D col in colliders)
-            {
-                if (col.gameObject.CompareTag(Constants.Tags.Collectable))
-                {
-                    var collectable = col.GetComponent<Collectable>();
-                    collectable.PickUp();
-                }
-            }
-        }
-    }
+    // private void CheckForCollectable()
+    // {
+    //     if (Input.GetKeyDown(KeyCode.F))
+    //     {
+    //         Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, pickUpRange);
+    //         foreach (Collider2D col in colliders)
+    //         {
+    //             if (col.gameObject.CompareTag(Constants.Tags.Collectable))
+    //             {
+    //                 var collectable = col.GetComponent<Collectable>();
+    //                 collectable.PickUp();
+    //             }
+    //         }
+    //     }
+    // }
 
     public void ToggleMovement(bool active)
     {
