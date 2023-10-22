@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 public class InventorySlot : MonoBehaviour, IPointerDownHandler
 {
-    [HideInInspector] public ItemData itemData;
+    [HideInInspector] public ItemData itemData; // GetData Function is better than hidden public 
     
     [SerializeField] private Image iconImage;
     
