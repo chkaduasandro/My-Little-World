@@ -9,7 +9,6 @@ public class Collectable : Interaction
     
     [Header("Reference Testing")]
     [SerializeField] private ItemData referenceItemData;
-    
     private ItemData _itemData;
 
     private void Awake()
