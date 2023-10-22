@@ -9,16 +9,7 @@ public class UIManager : Singleton<UIManager>
     [SerializeField] private ShopMenuUI shopMenuUI;
 
 
-
-    public void OpenInventory()
-    {
-        
-    }
-
-    public void OpenEquipment()
-    {
-        
-    }
+    
 
     public void OpenShopMenu(List<ItemData> itemDatas)
     {
@@ -26,11 +17,17 @@ public class UIManager : Singleton<UIManager>
 
         //Close Both Inventory and Equipment UI
         shopMenuUI.OpenMenu(itemDatas);
+        
+        equipmentUI.CloseUI();
+        inventoryUI.CloseUI();
     }
 
     public void CloseShopMenu()
     {
         GameManager.Instance.SwitchControlState(ControlState.Player);
         shopMenuUI.CloseMenu();
+        
+        equipmentUI.OpenUI();
+        inventoryUI.OpenUI();
     }
 }

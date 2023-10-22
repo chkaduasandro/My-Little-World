@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 36281a8ba31ff2d48b3c9d741f88d4b3, type: 3}
-  m_Name: Hood 1
+  m_Name: Chest 2
   m_EditorClassIdentifier: 
-  Id: 4
-  Price: 100
-  IconUi: {fileID: 21300000, guid: f7e7bed775fff8347b9e53c67e20875f, type: 3}
-  Type: 0
-  Sprite: {fileID: 21300000, guid: f7e7bed775fff8347b9e53c67e20875f, type: 3}
+  Id: 2
+  Price: 500
+  IconUi: {fileID: 21300000, guid: 124013dbba7f284489ac16156c930131, type: 3}
+  Type: 1
+  Sprite: {fileID: 21300000, guid: 3d9056df586b6024fbc5b9fee2433eef, type: 3}

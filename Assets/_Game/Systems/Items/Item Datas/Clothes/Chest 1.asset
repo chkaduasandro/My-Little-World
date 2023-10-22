@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36281a8ba31ff2d48b3c9d741f88d4b3, type: 3}
   m_Name: Chest 1
   m_EditorClassIdentifier: 
-  Id: 2
+  Id: 1
   Price: 500
   IconUi: {fileID: 21300000, guid: 90458a12b047bb84ba77cb7ea81ba457, type: 3}
   Type: 1

@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class EquipmentUI : MonoBehaviour
+public class EquipmentUI : PlayerUI
 {
     private Inventory inventory;
 

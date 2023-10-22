@@ -9,10 +9,14 @@ public class ShopMenuUI : MonoBehaviour
 {
     [SerializeField] private Button exitButton;
     
-    [SerializeField] private List<ShopSlot> shopSideSlots;
+    [SerializeField] private ShopSlot shopSlotPrefab;
+    [SerializeField] private RectTransform shopSlotContent;
+    
     [SerializeField] private List<ShopSlot> inventorySideSlots;
+    
+    private List<ShopSlot> generatedSlots = new List<ShopSlot>();
 
-    private List<ShopSlot> usedSlots = new List<ShopSlot>();
+    private bool _isOpened;
 
 
     private void Start()
@@ -24,29 +28,38 @@ public class ShopMenuUI : MonoBehaviour
     {
         ClearSlots();
 
-        for (int i = 0; i < shopSideSlots.Count; i++)
+        for (int i = 0; i < itemDatas.Count; i++)
         {
             // Amount will be undefined, gonna make it scrollable!
-            shopSideSlots[i].Populate(itemDatas[i]);
-            usedSlots.Add(shopSideSlots[i]);
+            var shopSlot = Instantiate(shopSlotPrefab, shopSlotContent);
+            shopSlot.Populate(itemDatas[i]);
+            generatedSlots.Add(shopSlot);
         }
 
         for (int i = 0; i < Inventory.Instance.itemsStored.Count; i++)
         {
             // Amount is defined by inventory already no need to check
             inventorySideSlots[i].Populate(Inventory.Instance.itemsStored[i]);
-            usedSlots.Add(inventorySideSlots[i]);
         }
     }
 
     private void ClearSlots()
     {
-        usedSlots.ForEach(slot => slot.Clear());
+        generatedSlots.ForEach(slot =>
+        {
+            Destroy(slot.gameObject);
+        });
+        generatedSlots.Clear();
+
+        inventorySideSlots.ForEach(slot => slot.Clear());
     }
 
 
     public void OpenMenu(List<ItemData> itemDatas)
     {
+        if (_isOpened) return;
+        _isOpened = true;
+        
         Initialize(itemDatas);
 
         transform.localScale = Vector3.zero;
@@ -57,6 +70,9 @@ public class ShopMenuUI : MonoBehaviour
 
     public void CloseMenu()
     {
+        if (!_isOpened) return;
+        _isOpened = false;
+
         transform.DOScale(Vector3.zero, 0.3f).SetEase(Ease.InBack).OnComplete(() =>
         {
             gameObject.SetActive(false);
