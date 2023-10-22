@@ -1941,6 +1941,10 @@ PrefabInstance:
       propertyPath: m_IsTrigger
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8599476299302522711, guid: f61dfb2e7115ff7458fd10f7fc74fce1, type: 3}
+      propertyPath: m_SortingOrder
+      value: 100
+      objectReference: {fileID: 0}
     - target: {fileID: 8599476299472997226, guid: f61dfb2e7115ff7458fd10f7fc74fce1, type: 3}
       propertyPath: m_Name
       value: Interaction-Menu
