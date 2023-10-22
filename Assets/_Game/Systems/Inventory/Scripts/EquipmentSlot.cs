@@ -7,6 +7,8 @@ using UnityEngine.UI;
 public class EquipmentSlot : MonoBehaviour, IPointerDownHandler
 {
     [HideInInspector] public ClothingData clothingData;
+    
+    [SerializeField] private Sprite defaultSprite;
     [SerializeField] private Image iconImage;
 
     public void Populate(ClothingData clothingData)
@@ -20,7 +22,7 @@ public class EquipmentSlot : MonoBehaviour, IPointerDownHandler
     {
         clothingData = null;
         iconImage.gameObject.SetActive(false);
-        iconImage.sprite = null;
+        iconImage.sprite = defaultSprite;
     }
 
     public void OnPointerDown(PointerEventData eventData)
