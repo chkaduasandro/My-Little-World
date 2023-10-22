@@ -1,23 +1,32 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using DG.Tweening;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class ShopMenuUI : MonoBehaviour
 {
     [SerializeField] private Button exitButton;
+    [SerializeField] private Button tradeButton;
+
+    [SerializeField] private TMP_Text exchangeAmount;
+    [SerializeField] private TMP_Text balanceAmount;
     
     [SerializeField] private ShopSlot shopSlotPrefab;
     [SerializeField] private RectTransform shopSlotContent;
     
     [SerializeField] private List<ShopSlot> inventorySideSlots;
-    
-    private List<ShopSlot> generatedSlots = new List<ShopSlot>();
+    private List<ShopSlot> shopSideSlots = new List<ShopSlot>();
+
+
+    private List<ShopSlot> selectedBuySlot = new ();
+    private List<ShopSlot> selectedSellSlot = new ();
 
     private bool _isOpened;
-
+    
 
     private void Start()
     {
@@ -32,24 +41,35 @@ public class ShopMenuUI : MonoBehaviour
         {
             // Amount will be undefined, gonna make it scrollable!
             var shopSlot = Instantiate(shopSlotPrefab, shopSlotContent);
-            shopSlot.Populate(itemDatas[i]);
-            generatedSlots.Add(shopSlot);
+            shopSlot.Populate(itemDatas[i],Recalculate);
+            shopSideSlots.Add(shopSlot);
         }
 
         for (int i = 0; i < Inventory.Instance.itemsStored.Count; i++)
         {
             // Amount is defined by inventory already no need to check
-            inventorySideSlots[i].Populate(Inventory.Instance.itemsStored[i]);
+            inventorySideSlots[i].Populate(Inventory.Instance.itemsStored[i], Recalculate);
         }
+        
+    }
+
+
+    private void Recalculate()
+    {
+        var inventorySideSum = inventorySideSlots.Select(slot => slot).Where(slot => slot.GetItemData != null && slot.isSelected).Sum(slot => slot.GetItemData.Price);
+        var shopSideSum = shopSideSlots.Select(slot => slot).Where(slot => slot.GetItemData != null && slot.isSelected).Sum(slot => slot.GetItemData.Price);
+
+        exchangeAmount.text = (inventorySideSum - shopSideSum).ToString("F2");
+        balanceAmount.text = Inventory.Instance.coinAount.ToString();
     }
 
     private void ClearSlots()
     {
-        generatedSlots.ForEach(slot =>
+        shopSideSlots.ForEach(slot =>
         {
             Destroy(slot.gameObject);
         });
-        generatedSlots.Clear();
+        shopSideSlots.Clear();
 
         inventorySideSlots.ForEach(slot => slot.Clear());
     }
@@ -61,6 +81,7 @@ public class ShopMenuUI : MonoBehaviour
         _isOpened = true;
         
         Initialize(itemDatas);
+        Recalculate();
 
         transform.localScale = Vector3.zero;
         gameObject.SetActive(true);

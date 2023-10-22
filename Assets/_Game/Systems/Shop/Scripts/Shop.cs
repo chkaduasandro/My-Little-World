@@ -34,6 +34,7 @@ public class Shop : MonoBehaviour
             interactionMenuHolder.gameObject.SetActive(false);
         });
     }
+    
 
 
     private void OnTriggerEnter(Collider other)
