@@ -12,7 +12,17 @@ public class MouseMenuController : Singleton<MouseMenuController>
 
     private List<MenuItemUI> generatedActionObjs = new();
 
-    private ItemData selectedSlot;
+    private ItemData _selectedSlot;
+    private bool _isActive;
+
+
+    private void LateUpdate()
+    {
+        if (Input.GetMouseButtonUp(0))
+        {
+            CloseMenu();
+        }
+    }
 
     public void InitializeMenu(params KeyValuePair<string, Action>[] actionKeyValues)
     {
@@ -45,6 +55,7 @@ public class MouseMenuController : Singleton<MouseMenuController>
 
     private void OpenMenu()
     {
+        _isActive = true;
         menuHolder.DOKill();
 
         menuHolder.position = Input.mousePosition;
@@ -56,6 +67,9 @@ public class MouseMenuController : Singleton<MouseMenuController>
 
     public void CloseMenu()
     {
+        if(!_isActive) return;
+        
+        _isActive = false;
         menuHolder.DOKill();
         menuHolder.DOScale(Vector3.zero, 0.2f).OnComplete(() =>
         {
