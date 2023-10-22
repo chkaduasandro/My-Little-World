@@ -6,8 +6,10 @@ using UnityEngine;
 public class Inventory : Singleton<Inventory>
 {
     public int slotAmount = 16;
-    public List<ItemData> itemsStored;
-    public event Action onItemChanged;
+    public List<ItemData> itemsStored = new ();
+    public Dictionary<SkinType, ClothingData> clothingEquipped = new ();
+    public event Action onItemsUpdate;
+    public event Action onClothesUpdate;
 
 
     public void AddItem(ItemData data)
@@ -20,9 +22,8 @@ public class Inventory : Singleton<Inventory>
 
         itemsStored.Add(data);
 
-        onItemChanged?.Invoke();
+        onItemsUpdate?.Invoke();
     }
-
     public void RemoveItem(ItemData data)
     {
         if (!itemsStored.Contains(data))
@@ -32,6 +33,40 @@ public class Inventory : Singleton<Inventory>
         }
 
         itemsStored.Remove(data);
-        onItemChanged?.Invoke();
+        onItemsUpdate?.Invoke();
     }
+
+    public void PutOnClothing(ClothingData clothingData)
+    {
+        if (clothingEquipped.TryGetValue(clothingData.Type, out var woreData))
+        {
+            TakeOffClothing(woreData);
+            
+            clothingEquipped[clothingData.Type] = clothingData;
+            RemoveItem(clothingData);
+        }
+        else
+        {
+            clothingEquipped[clothingData.Type] = clothingData;
+            RemoveItem(clothingData);
+        }
+        
+        onClothesUpdate?.Invoke();
+    }
+
+    public void TakeOffClothing(ClothingData clothingData)
+    {
+        if (itemsStored.Count >= slotAmount)
+        {
+            Debug.Log("Inventory Full");
+        }
+        else
+        {
+            AddItem(clothingData);
+            clothingEquipped.Remove(clothingData.Type);
+        }
+        
+        onClothesUpdate?.Invoke();
+    }
+    
 }

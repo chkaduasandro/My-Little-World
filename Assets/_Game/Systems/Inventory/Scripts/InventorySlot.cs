@@ -31,16 +31,16 @@ public class InventorySlot : MonoBehaviour, IPointerDownHandler
         {
             switch (itemData)
             {
-                case Consumable consumable:
-                    //consume
-                    //TODO Use of game manager at this point!
+                case ConsumableData consumable:
                     Debug.Log("Consume");
                     
                     break;
-                case Equipment equipment:
-                    //equip
-                    
+                case ClothingData equipment:
                     Debug.Log("Equip");
+                    MouseInputController.Instance.InitializeMenu(
+                        new KeyValuePair<string, Action>("Equip",() => Inventory.Instance.PutOnClothing(equipment)),
+                        new KeyValuePair<string, Action>("Drop",() => Inventory.Instance.RemoveItem(itemData))
+                        );
                     break;
                 default:
                     MouseInputController.Instance.InitializeMenu(new KeyValuePair<string, Action>("Drop",() => Inventory.Instance.RemoveItem(itemData)));

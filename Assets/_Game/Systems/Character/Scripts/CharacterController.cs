@@ -60,8 +60,10 @@ public class CharacterController : MonoBehaviour
     {
         if (other.gameObject.CompareTag(Constants.Tags.Collectable))
         {
+            Debug.Log("Sees");
             if (Input.GetKeyDown(KeyCode.F))
             {
+                Debug.Log("does");
                 var collectable = other.GetComponent<Collectable>();
                 collectable.PickUp();
             }

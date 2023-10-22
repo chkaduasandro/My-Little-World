@@ -9,20 +9,14 @@ public class MouseInputController : Singleton<MouseInputController>
     [SerializeField] private Transform menuHolder;
     [SerializeField] private MouseContextAction mouseContextActionPrefab;
 
-    private List<MouseContextAction> generatedActionObjs = new ();
+    private List<MouseContextAction> generatedActionObjs = new();
 
     private ItemData selectedSlot;
 
-    private void Update()
-    {
-        // if(Input.GetMouseButtonDown(1)) OpenMenu();
-    }
-
-    public void InitializeMenu(params KeyValuePair<string,Action>[] actionKeyValues)
+    public void InitializeMenu(params KeyValuePair<string, Action>[] actionKeyValues)
     {
         ClearMenu();
-        Debug.Log("Initialize");
-        
+
         for (int i = 0; i < actionKeyValues.Length; i++)
         {
             var contextAction = Instantiate(mouseContextActionPrefab, menuHolder);
@@ -31,7 +25,7 @@ public class MouseInputController : Singleton<MouseInputController>
             var pair = actionKeyValues[i];
             var action = pair.Value;
             var actionName = pair.Key;
-            
+
             contextAction.actionText.text = actionName;
             contextAction.actionButton.onClick.AddListener(() =>
             {
@@ -39,7 +33,7 @@ public class MouseInputController : Singleton<MouseInputController>
                 CloseMenu();
             });
         }
-        
+
         OpenMenu();
     }
 
@@ -48,15 +42,14 @@ public class MouseInputController : Singleton<MouseInputController>
         generatedActionObjs.ForEach(action => { Destroy(action.gameObject); });
         generatedActionObjs.Clear();
     }
-    
 
     private void OpenMenu()
     {
         menuHolder.DOKill();
-        
+
         menuHolder.position = Input.mousePosition;
         menuHolder.gameObject.SetActive(true);
-        
+
         menuHolder.localScale = Vector3.zero;
         menuHolder.DOScale(Vector3.one, 0.2f);
     }
