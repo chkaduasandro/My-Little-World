@@ -13,6 +13,7 @@ public class CharacterController : MonoBehaviour
     private Vector2 _movementInput;
     private bool _isShifted;
     private bool _isFacingRight;
+    private bool _canMove = true;
 
     private bool IsMoving => _movementInput.magnitude > 0;
     private bool IsRunning => IsMoving && _isShifted;
@@ -31,10 +32,14 @@ public class CharacterController : MonoBehaviour
 
     private void UpdateInput()
     {
-        _movementInput.x = Input.GetAxisRaw("Horizontal");
-        _movementInput.y = Input.GetAxisRaw("Vertical");
+        if (_canMove)
+        {
+            _movementInput.x = Input.GetAxisRaw("Horizontal");
+            _movementInput.y = Input.GetAxisRaw("Vertical");
 
-        _isShifted = Input.GetKey(KeyCode.LeftShift);
+            _isShifted = Input.GetKey(KeyCode.LeftShift);
+        }
+        else _movementInput = Vector2.zero;
     }
 
     private void UpdateMovement()
@@ -72,5 +77,10 @@ public class CharacterController : MonoBehaviour
                 }
             }
         }
+    }
+
+    public void ToggleMovement(bool active)
+    {
+        _canMove = active;
     }
 }
