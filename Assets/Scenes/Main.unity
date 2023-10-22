@@ -130,6 +130,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1105357655}
     m_Modifications:
+    - target: {fileID: 880842852359050547, guid: 7277dd75e907b27448ec1de08238d0bb, type: 3}
+      propertyPath: offset
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2055102311959635369, guid: 7277dd75e907b27448ec1de08238d0bb, type: 3}
       propertyPath: m_Name
       value: PF Props Tree T2 (1)
@@ -686,6 +690,10 @@ PrefabInstance:
     - target: {fileID: 2055102311959635375, guid: 9e7797bb065982d4497d030f065d6e2f, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2890525858906992518, guid: 9e7797bb065982d4497d030f065d6e2f, type: 3}
+      propertyPath: offset
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9e7797bb065982d4497d030f065d6e2f, type: 3}
@@ -55862,6 +55870,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2890525858906992518, guid: 9e7797bb065982d4497d030f065d6e2f, type: 3}
+      propertyPath: offset
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9e7797bb065982d4497d030f065d6e2f, type: 3}
 --- !u!4 &874465208 stripped
@@ -107784,6 +107796,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1105357655}
     m_Modifications:
+    - target: {fileID: 880842852359050547, guid: 7277dd75e907b27448ec1de08238d0bb, type: 3}
+      propertyPath: offset
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2055102311959635369, guid: 7277dd75e907b27448ec1de08238d0bb, type: 3}
       propertyPath: m_Name
       value: PF Props Tree T2 (2)
@@ -108326,6 +108342,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1105357655}
     m_Modifications:
+    - target: {fileID: 880842852359050547, guid: 7277dd75e907b27448ec1de08238d0bb, type: 3}
+      propertyPath: offset
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2055102311959635369, guid: 7277dd75e907b27448ec1de08238d0bb, type: 3}
       propertyPath: m_Name
       value: PF Props Tree T2
@@ -109457,6 +109477,10 @@ PrefabInstance:
     - target: {fileID: 2055102311959635375, guid: 9e7797bb065982d4497d030f065d6e2f, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2890525858906992518, guid: 9e7797bb065982d4497d030f065d6e2f, type: 3}
+      propertyPath: offset
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9e7797bb065982d4497d030f065d6e2f, type: 3}
