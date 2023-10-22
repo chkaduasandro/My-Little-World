@@ -34,7 +34,7 @@ public class EquipmentSlot : MonoBehaviour, IPointerDownHandler
                 case ClothingData equipment:
                     Debug.Log("UnEquip");
                     MouseInputController.Instance.InitializeMenu(
-                        new KeyValuePair<string, Action>("Equip", () => Inventory.Instance.TakeOffClothing(equipment))
+                        new KeyValuePair<string, Action>("UnEquip", () => Inventory.Instance.TakeOffClothing(equipment))
                     );
                     break;
                 default:

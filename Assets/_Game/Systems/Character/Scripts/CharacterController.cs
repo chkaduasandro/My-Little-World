@@ -7,6 +7,7 @@ public class CharacterController : MonoBehaviour
 {
     [SerializeField] private CharacterMovement characterMovement;
     [SerializeField] private CharacterAnimation characterAnimation;
+    [SerializeField] private float pickUpRange = 1f;
 
 
     private Vector2 _movementInput;
@@ -24,6 +25,8 @@ public class CharacterController : MonoBehaviour
         UpdateMovement();
         UpdateOrientation();
         UpdateAnimation();
+
+        CheckForCollectable();
     }
 
     private void UpdateInput()
@@ -55,17 +58,18 @@ public class CharacterController : MonoBehaviour
         }
     }
 
-
-    private void OnTriggerStay2D(Collider2D other)
+    private void CheckForCollectable()
     {
-        if (other.gameObject.CompareTag(Constants.Tags.Collectable))
+        if (Input.GetKeyDown(KeyCode.F))
         {
-            Debug.Log("Sees");
-            if (Input.GetKeyDown(KeyCode.F))
+            Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, pickUpRange);
+            foreach (Collider2D col in colliders)
             {
-                Debug.Log("does");
-                var collectable = other.GetComponent<Collectable>();
-                collectable.PickUp();
+                if (col.gameObject.CompareTag(Constants.Tags.Collectable))
+                {
+                    var collectable = col.GetComponent<Collectable>();
+                    collectable.PickUp();
+                }
             }
         }
     }
