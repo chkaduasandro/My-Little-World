@@ -2,4 +2,5 @@
 {
     Hood,
     Chest,
+    Pants,
 }

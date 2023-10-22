@@ -6,6 +6,7 @@ public class EquipmentUI : PlayerUI
 
     [SerializeField] private EquipmentSlot hoodSlot;
     [SerializeField] private EquipmentSlot chestSlot;
+    [SerializeField] private EquipmentSlot pantsSLot;
 
     private void Start()
     {
@@ -29,5 +30,11 @@ public class EquipmentUI : PlayerUI
             chestSlot.Populate(chest);
         }
         else chestSlot.Clear();
+        
+        if (inventory.clothingEquipped.TryGetValue(SkinType.Pants, out var pants))
+        {
+            pantsSLot.Populate(pants);
+        }
+        else pantsSLot.Clear();
     }
 }

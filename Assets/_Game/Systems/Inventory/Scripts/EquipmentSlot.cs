@@ -21,7 +21,7 @@ public class EquipmentSlot : MonoBehaviour, IPointerDownHandler
     public void Clear()
     {
         clothingData = null;
-        iconImage.gameObject.SetActive(false);
+        iconImage.gameObject.SetActive(true);
         iconImage.sprite = defaultSprite;
     }
 

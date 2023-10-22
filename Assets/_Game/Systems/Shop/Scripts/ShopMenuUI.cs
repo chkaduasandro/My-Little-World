@@ -96,7 +96,7 @@ public class ShopMenuUI : MonoBehaviour
 
     private void Recalculate()
     {
-        exchangeAmount.text = CalculateExchange().ToString("F2");
+        exchangeAmount.text = CalculateExchange().ToString("F0");
         balanceAmount.text = Inventory.Instance.coinAount.ToString();
     }
 

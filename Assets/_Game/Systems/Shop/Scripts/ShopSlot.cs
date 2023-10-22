@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using JetBrains.Annotations;
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -12,6 +13,7 @@ public class ShopSlot : MonoBehaviour
     public ItemData GetItemData => _itemData;
 
     [SerializeField] private Image iconImage;
+    [SerializeField] private TMP_Text priceText;
     [SerializeField] private Image backGroundImage;
     [SerializeField] private Button button;
 
@@ -23,7 +25,7 @@ public class ShopSlot : MonoBehaviour
         this._itemData = itemData;
         iconImage.gameObject.SetActive(true);
         iconImage.sprite = itemData.IconUi;
-
+        priceText.text = itemData.Price.ToString("F0");
 
         button.onClick.AddListener(() =>
         {
@@ -44,7 +46,7 @@ public class ShopSlot : MonoBehaviour
 
         iconImage.gameObject.SetActive(false);
         iconImage.sprite = null;
-
+        priceText.text = String.Empty;
         UnSelect();
     }
 
