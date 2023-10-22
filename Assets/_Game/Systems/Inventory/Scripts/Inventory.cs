@@ -5,18 +5,22 @@ using UnityEngine;
 
 public class Inventory : Singleton<Inventory>
 {
-    [SerializeField] private Collectable collectablePrefab;
+    public int coinAount = 5000; // Creating basic int for coins... This usually is done in other managers, but for simplicity sake and for testing.
 
-    public int slotAmount = 16;
     public List<ItemData> itemsStored = new ();
     public Dictionary<SkinType, ClothingData> clothingEquipped = new ();
     public event Action onItemsUpdate;
     public event Action onClothesUpdate;
+    public event Action onCoinsUpdate;
+
+    [SerializeField] private Collectable collectablePrefab;
+
+    private int _slotAmount = 16;
 
         
     public void AddItem(ItemData data)
     {
-        if (itemsStored.Count >= slotAmount)
+        if (itemsStored.Count >= _slotAmount)
         {
             Debug.Log("Inventory Full");
             return;
@@ -65,7 +69,7 @@ public class Inventory : Singleton<Inventory>
 
     public void TakeOffClothing(ClothingData clothingData)
     {
-        if (itemsStored.Count >= slotAmount)
+        if (itemsStored.Count >= _slotAmount)
         {
             Debug.Log("Inventory Full");
         }
@@ -77,5 +81,11 @@ public class Inventory : Singleton<Inventory>
         
         onClothesUpdate?.Invoke();
     }
-    
+
+    public void UpdateCoins(int amount)
+    {
+        coinAount += amount;
+        onCoinsUpdate?.Invoke();
+    }
+
 }
